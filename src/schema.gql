@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 input CreateProductInput {
-  description: String!
+  description: String
   name: String!
   price: Float!
 }
@@ -21,7 +21,7 @@ type Mutation {
 
 type Product {
   created_at: DateTime!
-  description: String!
+  description: String
   id: String!
   name: String!
   price: Float!

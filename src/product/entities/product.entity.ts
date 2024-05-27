@@ -8,8 +8,8 @@ export class Product {
   @Field()
   name: string;
 
-  @Field()
-  description: string;
+  @Field(() => String, { nullable: true })
+  description: string | null;
 
   @Field(() => Float)
   price: number;
