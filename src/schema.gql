@@ -5,6 +5,7 @@
 type Category {
   created_at: DateTime!
   id: String!
+  products: [Product!]
   title: String!
   updated_at: DateTime!
 }
@@ -14,6 +15,7 @@ input CreateCategoryInput {
 }
 
 input CreateProductInput {
+  category_id: String
   description: String
   name: String!
   price: Float!
@@ -34,6 +36,7 @@ type Mutation {
 }
 
 type Product {
+  category: Category
   created_at: DateTime!
   description: String
   id: String!
@@ -55,6 +58,7 @@ input UpdateCategoryInput {
 }
 
 input UpdateProductInput {
+  category_id: String
   description: String
   id: String!
   name: String

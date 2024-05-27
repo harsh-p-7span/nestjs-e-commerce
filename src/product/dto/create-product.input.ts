@@ -5,9 +5,16 @@ export class CreateProductInput {
   @Field()
   name: string;
 
-  @Field(() => String, { nullable: true })
-  description: string | null;
+  @Field(() => String, {
+    nullable: true,
+  })
+  description?: string;
 
   @Field(() => Float)
   price: number;
+
+  @Field(() => String, {
+    nullable: true,
+  })
+  category_id?: string;
 }

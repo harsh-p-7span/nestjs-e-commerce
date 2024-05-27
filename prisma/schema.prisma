@@ -20,8 +20,8 @@ model Product {
   price       Float
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
-  Category    Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId  String?
+  category    Category? @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category_id String?
 }
 
 model Category {

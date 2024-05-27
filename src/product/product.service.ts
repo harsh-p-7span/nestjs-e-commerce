@@ -11,17 +11,27 @@ export class ProductService {
   async create(data: CreateProductInput): Promise<Product> {
     return this.prisma.product.create({
       data,
+      include: {
+        category: true,
+      },
     });
   }
 
   async findAll(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+    return this.prisma.product.findMany({
+      include: {
+        category: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<Product> {
     const product = await this.prisma.product.findUnique({
       where: {
         id,
+      },
+      include: {
+        category: true,
       },
     });
     if (!product) {
@@ -37,6 +47,9 @@ export class ProductService {
         id,
       },
       data,
+      include: {
+        category: true,
+      },
     });
   }
 
@@ -44,6 +57,9 @@ export class ProductService {
     return this.prisma.product.delete({
       where: {
         id,
+      },
+      include: {
+        category: true,
       },
     });
   }
