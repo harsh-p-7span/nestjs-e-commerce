@@ -2,6 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  created_at: DateTime!
+  id: String!
+  title: String!
+  updated_at: DateTime!
+}
+
+input CreateCategoryInput {
+  title: String!
+}
+
 input CreateProductInput {
   description: String
   name: String!
@@ -14,8 +25,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
+  createCategory(data: CreateCategoryInput!): Category!
   createProduct(data: CreateProductInput!): Product!
+  deleteCategory(id: String!): Category!
   deleteProduct(id: String!): Product!
+  updateCategory(data: UpdateCategoryInput!): Category!
   updateProduct(data: UpdateProductInput!): Product!
 }
 
@@ -29,8 +43,15 @@ type Product {
 }
 
 type Query {
+  categories: [Category!]!
+  category(id: String!): Category!
   product(id: String!): Product!
   products: [Product!]!
+}
+
+input UpdateCategoryInput {
+  id: String!
+  title: String!
 }
 
 input UpdateProductInput {

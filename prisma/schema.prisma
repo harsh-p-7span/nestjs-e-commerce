@@ -14,10 +14,20 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String?
   price       Float
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  Category    Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  String?
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  title      String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   Product[]
 }
