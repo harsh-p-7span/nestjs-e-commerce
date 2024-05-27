@@ -1,5 +1,5 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql';
-import { Category } from 'src/category/entities/category.entity';
+import { Subcategory } from 'src/subcategory/entities/subcategory.entity';
 
 @ObjectType()
 export class Product {
@@ -21,8 +21,8 @@ export class Product {
   @Field()
   updated_at: Date;
 
-  @Field(() => Category, {
+  @Field(() => Subcategory, {
     nullable: true,
   })
-  category?: Category | null;
+  subcategory?: Subcategory | null;
 }

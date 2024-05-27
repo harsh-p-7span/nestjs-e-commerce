@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCategoryInput } from './dto/create-category.input';
+import { UpdateCategoryInput } from './dto/update-category.input';
 import { Category } from './entities/category.entity';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class CategoryService {
     return this.prisma.category.create({
       data,
       include: {
-        products: true,
+        subcategories: true,
       },
     });
   }
@@ -20,7 +20,7 @@ export class CategoryService {
   async findAll(): Promise<Category[]> {
     return this.prisma.category.findMany({
       include: {
-        products: true,
+        subcategories: true,
       },
     });
   }
@@ -31,7 +31,7 @@ export class CategoryService {
         id,
       },
       include: {
-        products: true,
+        subcategories: true,
       },
     });
     if (!product) {
@@ -41,17 +41,14 @@ export class CategoryService {
     return product;
   }
 
-  async update(
-    id: string,
-    data: Prisma.CategoryUpdateInput,
-  ): Promise<Category> {
+  async update(data: UpdateCategoryInput): Promise<Category> {
     return this.prisma.category.update({
       where: {
-        id,
+        id: data.id,
       },
       data,
       include: {
-        products: true,
+        subcategories: true,
       },
     });
   }
@@ -62,7 +59,7 @@ export class CategoryService {
         id,
       },
       include: {
-        products: true,
+        subcategories: true,
       },
     });
   }

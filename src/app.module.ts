@@ -8,6 +8,7 @@ import { CategoryModule } from './category/category.module';
 import { PrismaModule } from './prisma.module';
 import { PrismaService } from './prisma.service';
 import { ProductModule } from './product/product.module';
+import { SubcategoryModule } from './subcategory/subcategory.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductModule } from './product/product.module';
     PrismaModule,
     ProductModule,
     CategoryModule,
+    SubcategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

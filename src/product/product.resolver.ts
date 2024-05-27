@@ -3,7 +3,6 @@ import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
 import { ProductService } from './product.service';
-import { Prisma } from '@prisma/client';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -35,11 +34,7 @@ export class ProductResolver {
 
   @Mutation(() => Product)
   updateProduct(@Args('data') data: UpdateProductInput): Promise<Product> {
-    const { id, ...updateData } = data;
-    return this.productService.update(
-      id,
-      updateData as Prisma.ProductUpdateInput,
-    );
+    return this.productService.update(data);
   }
 
   @Mutation(() => Product)

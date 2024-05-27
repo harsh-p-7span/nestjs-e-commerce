@@ -5,7 +5,7 @@
 type Category {
   created_at: DateTime!
   id: String!
-  products: [Product!]
+  subcategories: [Subcategory!]!
   title: String!
   updated_at: DateTime!
 }
@@ -15,10 +15,15 @@ input CreateCategoryInput {
 }
 
 input CreateProductInput {
-  category_id: String
   description: String
   name: String!
   price: Float!
+  subcategory_id: String
+}
+
+input CreateSubcategoryInput {
+  category_id: String
+  title: String!
 }
 
 """
@@ -29,19 +34,22 @@ scalar DateTime
 type Mutation {
   createCategory(data: CreateCategoryInput!): Category!
   createProduct(data: CreateProductInput!): Product!
+  createSubcategory(data: CreateSubcategoryInput!): Subcategory!
   deleteCategory(id: String!): Category!
   deleteProduct(id: String!): Product!
+  deleteSubcategory(id: String!): Subcategory!
   updateCategory(data: UpdateCategoryInput!): Category!
   updateProduct(data: UpdateProductInput!): Product!
+  updateSubcategory(data: UpdateSubcategoryInput!): Subcategory!
 }
 
 type Product {
-  category: Category
   created_at: DateTime!
   description: String
   id: String!
   name: String!
   price: Float!
+  subcategory: Subcategory
   updated_at: DateTime!
 }
 
@@ -50,6 +58,17 @@ type Query {
   category(id: String!): Category!
   product(id: String!): Product!
   products: [Product!]!
+  subcategories: [Subcategory!]!
+  subcategory(id: String!): Subcategory!
+}
+
+type Subcategory {
+  category: Category
+  created_at: DateTime!
+  id: String!
+  products: [Product!]!
+  title: String!
+  updated_at: DateTime!
 }
 
 input UpdateCategoryInput {
@@ -58,9 +77,15 @@ input UpdateCategoryInput {
 }
 
 input UpdateProductInput {
-  category_id: String
   description: String
   id: String!
   name: String
   price: Float
+  subcategory_id: String
+}
+
+input UpdateSubcategoryInput {
+  category_id: String
+  id: String!
+  title: String!
 }

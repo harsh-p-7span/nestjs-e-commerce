@@ -13,21 +13,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id          String    @id @default(uuid())
-  name        String
-  description String?
-  price       Float
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  category    Category? @relation(fields: [category_id], references: [id], onDelete: Cascade)
-  category_id String?
+model product {
+  id             String       @id @default(uuid())
+  name           String
+  description    String?
+  price          Float
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  subcategory    subcategory? @relation(fields: [subcategory_id], references: [id])
+  subcategory_id String?
 }
 
-model Category {
-  id         String    @id @default(uuid())
-  title      String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  products   Product[]
+model category {
+  id            String        @id @default(uuid())
+  title         String
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  subcategories subcategory[]
+}
+
+model subcategory {
+  id          String    @id @default(uuid())
+  title       String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  products    product[]
+  category    category? @relation(fields: [category_id], references: [id])
+  category_id String?
 }

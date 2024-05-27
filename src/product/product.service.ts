@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateProductInput } from './dto/create-product.input';
+import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
 
 @Injectable()
@@ -12,17 +12,29 @@ export class ProductService {
     return this.prisma.product.create({
       data,
       include: {
-        category: true,
+        subcategory: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   }
 
   async findAll(): Promise<Product[]> {
-    return this.prisma.product.findMany({
+    const products = await this.prisma.product.findMany({
       include: {
-        category: true,
+        subcategory: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
+
+    console.log(products);
+
+    return products;
   }
 
   async findOne(id: string): Promise<Product> {
@@ -31,7 +43,11 @@ export class ProductService {
         id,
       },
       include: {
-        category: true,
+        subcategory: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
     if (!product) {
@@ -41,14 +57,18 @@ export class ProductService {
     return product;
   }
 
-  async update(id: string, data: Prisma.ProductUpdateInput): Promise<Product> {
+  async update(data: UpdateProductInput): Promise<Product> {
     return this.prisma.product.update({
       where: {
-        id,
+        id: data.id,
       },
       data,
       include: {
-        category: true,
+        subcategory: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   }
@@ -59,7 +79,11 @@ export class ProductService {
         id,
       },
       include: {
-        category: true,
+        subcategory: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   }

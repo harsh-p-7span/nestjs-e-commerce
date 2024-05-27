@@ -1,9 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CategoryService } from './category.service';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { Category } from './entities/category.entity';
-import { CategoryService } from './category.service';
-import { Prisma } from '@prisma/client';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -35,11 +34,7 @@ export class CategoryResolver {
 
   @Mutation(() => Category)
   updateCategory(@Args('data') data: UpdateCategoryInput): Promise<Category> {
-    const { id, ...updateData } = data;
-    return this.productService.update(
-      id,
-      updateData as Prisma.ProductUpdateInput,
-    );
+    return this.productService.update(data);
   }
 
   @Mutation(() => Category)

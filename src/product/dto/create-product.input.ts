@@ -16,5 +16,5 @@ export class CreateProductInput {
   @Field(() => String, {
     nullable: true,
   })
-  category_id?: string;
+  subcategory_id?: string;
 }
