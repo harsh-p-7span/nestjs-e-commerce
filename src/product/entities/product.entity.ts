@@ -1,5 +1,12 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { Subcategory } from 'src/subcategory/entities/subcategory.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -16,7 +23,12 @@ export class Product {
   @Column()
   description: string;
 
-  @Field()
+  @Field(() => Float)
   @Column()
   price: number;
+
+  @Field(() => [Subcategory])
+  @ManyToMany(() => Subcategory, (subcategory) => subcategory.products)
+  @JoinTable()
+  subcategories: Subcategory[];
 }

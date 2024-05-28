@@ -4,6 +4,7 @@ import { ProductService } from './product.service';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { GraphQLResolveInfo } from 'graphql';
+import { Subcategory } from 'src/subcategory/entities/subcategory.entity';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -12,20 +13,17 @@ export class ProductResolver {
   @Mutation(() => Product)
   createProduct(
     @Args('createProductInput') createProductInput: CreateProductInput,
-  ): Promise<Product> {
+  ) {
     return this.productService.create(createProductInput);
   }
 
-  @Query(() => [Product])
+  @Query(() => [Product, Subcategory])
   products(@Info() info: GraphQLResolveInfo): Promise<Product[]> {
     return this.productService.findAll(info);
   }
 
   @Query(() => Product)
-  product(
-    @Args('id') id: number,
-    @Info() info: GraphQLResolveInfo,
-  ): Promise<Product> {
+  product(@Args('id') id: number, @Info() info: GraphQLResolveInfo) {
     return this.productService.findOne(id, info);
   }
 
@@ -34,7 +32,7 @@ export class ProductResolver {
     @Args('id') id: number,
     @Args('product') product: UpdateProductInput,
     @Info() info: GraphQLResolveInfo,
-  ): Promise<Product> {
+  ) {
     return this.productService.update(id, product, info);
   }
 

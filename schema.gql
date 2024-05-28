@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateProductInput {
+  description: String!
+  name: String!
+  price: Float!
+}
+
+input CreateSubcategoryInput {
+  name: String!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  createSubcategory(createSubcategoryInput: CreateSubcategoryInput!): Subcategory!
+  removeProduct(id: Float!): String!
+  removeSubcategory(id: Float!): String!
+  updateProduct(id: Float!, product: UpdateProductInput!): Product!
+  updateSubcategory(id: Float!, subcategory: UpdateSubcategoryInput!): Subcategory!
+}
+
+type Product {
+  description: String!
+  id: ID!
+  name: String!
+  price: Float!
+  subcategories: [Subcategory!]!
+}
+
+type Query {
+  product(id: Float!): Product!
+  products: [Product!]!
+  subcategories: [Subcategory!]!
+  subcategory(id: Float!): Subcategory!
+}
+
+type Subcategory {
+  id: ID!
+  name: String!
+  products: [Product!]!
+}
+
+input UpdateProductInput {
+  description: String
+  name: String
+  price: Float
+}
+
+input UpdateSubcategoryInput {
+  name: String
+}

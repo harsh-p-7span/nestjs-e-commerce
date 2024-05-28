@@ -1,5 +1,4 @@
-// src/product/dto/create-product.input.ts
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateProductInput {
@@ -9,6 +8,6 @@ export class CreateProductInput {
   @Field()
   description: string;
 
-  @Field()
+  @Field(() => Float)
   price: number;
 }

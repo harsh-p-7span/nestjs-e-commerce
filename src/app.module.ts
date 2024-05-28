@@ -4,16 +4,18 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './product/product.module';
 import { Product } from './product/entities/product.entity';
+import { ProductModule } from './product/product.module';
+import { Subcategory } from './subcategory/entities/subcategory.entity';
+import { SubcategoryModule } from './subcategory/subcategory.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
-      autoSchemaFile: true,
       sortSchema: true,
+      autoSchemaFile: 'schema.gql',
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -22,10 +24,11 @@ import { Product } from './product/entities/product.entity';
       username: 'harrsh',
       password: 'harrsh',
       database: 'e-commerce',
-      entities: [Product],
+      entities: [Product, Subcategory],
       synchronize: true,
     }),
     ProductModule,
+    SubcategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
