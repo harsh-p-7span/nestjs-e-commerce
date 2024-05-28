@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
+import { GraphQLResolveInfo } from 'graphql';
+import { fieldsList } from 'graphql-fields-list';
 
 @Injectable()
 export class ProductService {
@@ -17,21 +19,34 @@ export class ProductService {
     return this.productsRepository.save(newProduct);
   }
 
-  findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+  async findAll(info: GraphQLResolveInfo): Promise<Product[]> {
+    const fields = fieldsList(info);
+    const products = await this.productsRepository.find({
+      select: fields as (keyof Product)[],
+    });
+    console.log(products);
+
+    return products;
   }
 
-  findOne(id: number): Promise<Product> {
+  findOne(id: number, info: GraphQLResolveInfo): Promise<Product> {
+    const fields = fieldsList(info);
+
     return this.productsRepository.findOneOrFail({
       where: {
         id,
       },
+      select: fields as (keyof Product)[],
     });
   }
 
-  async update(id: number, productData: UpdateProductInput): Promise<Product> {
+  async update(
+    id: number,
+    productData: UpdateProductInput,
+    info: GraphQLResolveInfo,
+  ): Promise<Product> {
     await this.productsRepository.update(id, productData);
-    return this.findOne(id);
+    return this.findOne(id, info);
   }
 
   async remove(id: number): Promise<string> {
