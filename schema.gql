@@ -31,7 +31,7 @@ type Product {
 
 type Query {
   product(id: Float!): Product!
-  products: [Product!]!
+  products(page: Int! = 0, perPage: Int! = 10): [Product!]!
   subcategories: [Subcategory!]!
   subcategory(id: Float!): Subcategory!
 }

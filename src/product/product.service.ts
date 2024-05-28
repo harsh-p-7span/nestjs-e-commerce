@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
+import { PaginationArgs } from 'src/common/dto/pagination.args';
 
 @Injectable()
 export class ProductService {
@@ -22,7 +23,8 @@ export class ProductService {
     return this.productRepository.save(newProduct);
   }
 
-  async findAll(info: GraphQLResolveInfo) {
+  async findAll(paginationArgs: PaginationArgs, info: GraphQLResolveInfo) {
+    const { page, perPage } = paginationArgs;
     const fields = fieldsList(info);
 
     const products = await this.productRepository.find({
@@ -30,6 +32,8 @@ export class ProductService {
       relations: {
         subcategories: true,
       },
+      skip: (page - 1) * perPage,
+      take: perPage,
     });
     console.log(JSON.stringify(products, null, 2));
 

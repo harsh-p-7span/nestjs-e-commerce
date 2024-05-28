@@ -5,6 +5,7 @@ import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { GraphQLResolveInfo } from 'graphql';
 import { Subcategory } from 'src/subcategory/entities/subcategory.entity';
+import { PaginationArgs } from 'src/common/dto/pagination.args';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -18,8 +19,11 @@ export class ProductResolver {
   }
 
   @Query(() => [Product, Subcategory])
-  products(@Info() info: GraphQLResolveInfo): Promise<Product[]> {
-    return this.productService.findAll(info);
+  products(
+    @Args() paginationArgs: PaginationArgs,
+    @Info() info: GraphQLResolveInfo,
+  ): Promise<Product[]> {
+    return this.productService.findAll(paginationArgs, info);
   }
 
   @Query(() => Product)
