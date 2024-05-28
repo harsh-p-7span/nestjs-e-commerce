@@ -8,6 +8,7 @@ import { Product } from './product/entities/product.entity';
 import { ProductModule } from './product/product.module';
 import { Subcategory } from './subcategory/entities/subcategory.entity';
 import { SubcategoryModule } from './subcategory/subcategory.module';
+import { Upload } from './common/scalars/upload.scalar';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SubcategoryModule } from './subcategory/subcategory.module';
       playground: true,
       sortSchema: true,
       autoSchemaFile: 'schema.gql',
+      csrfPrevention: true,
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -27,6 +29,7 @@ import { SubcategoryModule } from './subcategory/subcategory.module';
       entities: [Product, Subcategory],
       synchronize: true,
     }),
+    Upload,
     ProductModule,
     SubcategoryModule,
   ],

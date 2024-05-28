@@ -19,6 +19,7 @@ type Mutation {
   removeSubcategory(id: Float!): String!
   updateProduct(id: Float!, product: UpdateProductInput!): Product!
   updateSubcategory(id: Float!, subcategory: UpdateSubcategoryInput!): Subcategory!
+  uploadImage(uploadImageInput: UploadImageInput!): String!
 }
 
 type Product {
@@ -50,4 +51,11 @@ input UpdateProductInput {
 
 input UpdateSubcategoryInput {
   name: String
+}
+
+"""Upload files"""
+scalar Upload
+
+input UploadImageInput {
+  image: Upload!
 }

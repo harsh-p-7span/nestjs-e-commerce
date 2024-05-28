@@ -6,6 +6,9 @@ import { UpdateSubcategoryInput } from './dto/update-subcategory.input';
 import { Subcategory } from './entities/subcategory.entity';
 import { GraphQLResolveInfo } from 'graphql';
 import { fieldsList } from 'graphql-fields-list';
+import { UploadImageInput } from './dto/upload-image.input';
+import { join } from 'path';
+import { uploadFileStream } from 'src/utils/upload';
 
 @Injectable()
 export class SubcategoryService {
@@ -14,11 +17,34 @@ export class SubcategoryService {
     private subcategoryRepository: Repository<Subcategory>,
   ) {}
 
+  uploadDir = 'uploads';
+
   create(createSubcategoryInput: CreateSubcategoryInput) {
     const newProduct = this.subcategoryRepository.create(
       createSubcategoryInput,
     );
     return this.subcategoryRepository.save(newProduct);
+  }
+
+  async upload(uploadImageInput: UploadImageInput) {
+    console.log(uploadImageInput.image);
+
+    const imageFile: any = await uploadImageInput.image;
+    const fileName = `${Date.now()}_${imageFile.filename}`;
+    const uploadDir = join(
+      this.uploadDir,
+      // `profiles_${Math.random()}`,
+      'images',
+    );
+    const imagePath = await uploadFileStream(
+      imageFile.createReadStream,
+      uploadDir,
+      fileName,
+    );
+
+    console.log('imagePath >>', imagePath);
+
+    return 'Image uploaded successfully.';
   }
 
   async findAll(info: GraphQLResolveInfo) {

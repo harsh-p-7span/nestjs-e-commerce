@@ -4,6 +4,7 @@ import { CreateSubcategoryInput } from './dto/create-subcategory.input';
 import { UpdateSubcategoryInput } from './dto/update-subcategory.input';
 import { Subcategory } from './entities/subcategory.entity';
 import { SubcategoryService } from './subcategory.service';
+import { UploadImageInput } from './dto/upload-image.input';
 
 @Resolver(() => Subcategory)
 export class SubcategoryResolver {
@@ -15,6 +16,11 @@ export class SubcategoryResolver {
     createSubcategoryInput: CreateSubcategoryInput,
   ) {
     return this.subcategoryService.create(createSubcategoryInput);
+  }
+
+  @Mutation(() => String)
+  uploadImage(@Args('uploadImageInput') uploadImageInput: UploadImageInput) {
+    return this.subcategoryService.upload(uploadImageInput);
   }
 
   @Query(() => [Subcategory])
