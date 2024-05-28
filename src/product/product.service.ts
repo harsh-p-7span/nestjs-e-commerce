@@ -12,7 +12,7 @@ export class ProductService {
     return this.prisma.product.create({
       data,
       include: {
-        subcategory: {
+        subcategories: {
           include: {
             category: true,
           },
@@ -24,7 +24,7 @@ export class ProductService {
   async findAll(): Promise<Product[]> {
     const products = await this.prisma.product.findMany({
       include: {
-        subcategory: {
+        subcategories: {
           include: {
             category: true,
           },
@@ -43,7 +43,7 @@ export class ProductService {
         id,
       },
       include: {
-        subcategory: {
+        subcategories: {
           include: {
             category: true,
           },
@@ -64,7 +64,7 @@ export class ProductService {
       },
       data,
       include: {
-        subcategory: {
+        subcategories: {
           include: {
             category: true,
           },
@@ -79,7 +79,7 @@ export class ProductService {
         id,
       },
       include: {
-        subcategory: {
+        subcategories: {
           include: {
             category: true,
           },

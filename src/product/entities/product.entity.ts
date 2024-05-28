@@ -21,8 +21,8 @@ export class Product {
   @Field()
   updated_at: Date;
 
-  @Field(() => Subcategory, {
+  @Field(() => [Subcategory], {
     nullable: true,
   })
-  subcategory?: Subcategory | null;
+  subcategories?: Subcategory[];
 }

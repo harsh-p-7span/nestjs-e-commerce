@@ -13,7 +13,4 @@ export class UpdateProductInput {
 
   @Field(() => Float, { nullable: true })
   price?: number;
-
-  @Field(() => String, { nullable: true })
-  subcategory_id?: string;
 }
